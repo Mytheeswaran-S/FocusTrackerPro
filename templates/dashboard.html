@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Focus Tracker Pro</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            min-height: 100vh;
+            color: white;
+        }
+        .navbar {
+            background: rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar h1 { font-size: 22px; color: #e94560; }
+        .navbar .staff-info { color: #a8b2d8; font-size: 14px; }
+        .navbar .logout {
+            color: #64ffda;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 8px 20px;
+            border: 1px solid #64ffda;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+        .navbar .logout:hover {
+            background: #64ffda;
+            color: #1a1a2e;
+        }
+        .container { padding: 40px; }
+        .welcome-banner {
+            background: linear-gradient(135deg, rgba(233,69,96,0.2), rgba(194,49,82,0.2));
+            border: 1px solid rgba(233,69,96,0.3);
+            border-radius: 20px;
+            padding: 30px 40px;
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .welcome-banner h2 { font-size: 28px; color: #e94560; }
+        .welcome-banner p { color: #a8b2d8; margin-top: 5px; }
+        .class-badge {
+            background: #e94560;
+            padding: 10px 25px;
+            border-radius: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        .card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: white;
+            display: block;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #e94560;
+            box-shadow: 0 15px 40px rgba(233,69,96,0.2);
+        }
+        .card .icon { font-size: 50px; margin-bottom: 15px; }
+        .card h3 { font-size: 20px; margin-bottom: 8px; color: #64ffda; }
+        .card p { color: #8892b0; font-size: 14px; line-height: 1.6; }
+        .sessions-section h3 {
+            font-size: 22px;
+            color: #64ffda;
+            margin-bottom: 20px;
+        }
+        .no-sessions {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            color: #8892b0;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1>🎓 Focus Tracker Pro</h1>
+        <div class="staff-info">👤 {{ staff_name }} Mam</div>
+        <a href="/logout" class="logout">Logout</a>
+    </div>
+
+    <div class="container">
+        <div class="welcome-banner">
+            <div>
+                <h2>Welcome, {{ staff_name }} Mam! 👋</h2>
+                <p>Manage your class sessions and monitor student focus</p>
+            </div>
+            <div class="class-badge">{{ class_name }}</div>
+        </div>
+
+        <div class="cards">
+            <a href="/start-session" class="card">
+                <div class="icon">📷</div>
+                <h3>Start Session</h3>
+                <p>Begin monitoring your class with AI-powered face detection</p>
+            </a>
+            <a href="/students" class="card">
+                <div class="icon">👥</div>
+                <h3>Student List</h3>
+                <p>View and manage student register numbers for {{ class_name }}</p>
+            </a>
+            <a href="/reports" class="card">
+                <div class="icon">📊</div>
+                <h3>Reports</h3>
+                <p>View session reports and download PDF summaries</p>
+            </a>
+        </div>
+
+        <div class="sessions-section">
+            <h3>📅 Recent Sessions</h3>
+            <div class="no-sessions">
+                <p>📭 No sessions yet. Start a new session to begin monitoring!</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

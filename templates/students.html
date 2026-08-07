@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student List - Focus Tracker Pro</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            min-height: 100vh;
+            color: white;
+        }
+        .navbar {
+            background: rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar h1 { font-size: 22px; color: #e94560; }
+        .navbar a {
+            color: #64ffda;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 8px 20px;
+            border: 1px solid #64ffda;
+            border-radius: 20px;
+        }
+        .container { padding: 40px; }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .header h2 { font-size: 28px; color: #64ffda; }
+        .header p { color: #8892b0; margin-top: 5px; }
+        .add-form {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .add-form h3 { color: #e94560; margin-bottom: 20px; font-size: 18px; }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 15px;
+            align-items: end;
+        }
+        .form-group label {
+            display: block;
+            color: #a8b2d8;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 10px;
+            color: white;
+            font-size: 15px;
+            outline: none;
+        }
+        .form-group input:focus { border-color: #e94560; }
+        .btn-add {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #e94560, #c23152);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        .btn-add:hover { transform: translateY(-2px); }
+        .success {
+            background: rgba(100,255,218,0.1);
+            border: 1px solid #64ffda;
+            color: #64ffda;
+            padding: 12px 18px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            text-align: center;
+        }
+        .student-table {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .table-header {
+            padding: 20px 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .table-header h3 { color: #64ffda; font-size: 18px; }
+        .count-badge {
+            background: #e94560;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        th {
+            background: rgba(255,255,255,0.05);
+            padding: 15px 20px;
+            text-align: left;
+            color: #a8b2d8;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        td {
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: #e0e0e0;
+            font-size: 15px;
+        }
+        tr:hover td { background: rgba(255,255,255,0.03); }
+        .no-students {
+            padding: 40px;
+            text-align: center;
+            color: #8892b0;
+        }
+        .btn-delete {
+            background: rgba(233,69,96,0.2);
+            border: 1px solid #e94560;
+            color: #e94560;
+            padding: 6px 15px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .reg-badge {
+            background: rgba(100,255,218,0.1);
+            border: 1px solid rgba(100,255,218,0.2);
+            color: #64ffda;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1>🎓 Focus Tracker Pro</h1>
+        <a href="/dashboard">← Back to Dashboard</a>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div>
+                <h2>👥 Student List - {{ class_name }}</h2>
+                <p>Manage students and Roll numbers</p>
+            </div>
+        </div>
+
+        {% if success %}
+        <div class="success">✅ {{ success }}</div>
+        {% endif %}
+
+        <div class="add-form">
+            <h3>➕ Add New Student</h3>
+            <form method="POST" action="/students/add/{{ class_name }}"><input type="hidden" name="class_name" value="{{ class_name }}">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Roll Number</label>
+                        <input type="text" name="register_no" 
+                               placeholder="e.g. 22IT001" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Student Name</label>
+                        <input type="text" name="name" 
+                               placeholder="e.g. Mytheeswaran" required>
+                    </div>
+                    <button type="submit" class="btn-add">Add Student</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="student-table">
+            <div class="table-header">
+                <h3>📋 Students in {{ class_name }}</h3>
+                <span class="count-badge">{{ students|length }} Students</span>
+            </div>
+            {% if students %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>ROLL NO</th>
+                        <th>Student Name</th>
+                        <th>Class</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td><span class="reg-badge">{{ student.register_no }}</span></td>
+                        <td>{{ student.name }}</td>
+                        <td>{{ student.class_name }}</td>
+                        <td>
+                            <a href="/students/delete/{{ student.id }}" 
+                               class="btn-delete"
+                               onclick="return confirm('Delete this student?')">
+                               Delete
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="no-students">
+                📭 No students added yet. Add students using the form above!
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

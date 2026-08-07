@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Login - Focus Tracker Pro</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 50px 60px;
+            width: 450px;
+            backdrop-filter: blur(10px);
+            color: white;
+        }
+        .back-btn {
+            color: #64ffda;
+            text-decoration: none;
+            font-size: 14px;
+            display: block;
+            margin-bottom: 30px;
+        }
+        .logo { font-size: 40px; text-align: center; margin-bottom: 10px; }
+        h2 {
+            text-align: center;
+            font-size: 28px;
+            color: #e94560;
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #8892b0;
+            font-size: 14px;
+            margin-bottom: 35px;
+        }
+        .form-group { margin-bottom: 20px; }
+        label {
+            display: block;
+            color: #a8b2d8;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        select, input {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: border 0.3s;
+        }
+        select option { background: #1a1a2e; color: white; }
+        select:focus, input:focus {
+            border-color: #e94560;
+        }
+        .error {
+            background: rgba(233,69,96,0.2);
+            border: 1px solid #e94560;
+            color: #e94560;
+            padding: 12px 18px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            text-align: center;
+        }
+        .btn-login {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #e94560, #c23152);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(233,69,96,0.4);
+        }
+        .forgot {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .forgot a {
+            color: #64ffda;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .advisor-info {
+            margin-top: 25px;
+            padding: 15px;
+            background: rgba(100,255,218,0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(100,255,218,0.1);
+        }
+        .advisor-info p {
+            color: #8892b0;
+            font-size: 12px;
+            text-align: center;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <a href="/" class="back-btn">← Back to Home</a>
+        <div class="logo">🔐</div>
+        <h2>Staff Login</h2>
+        <p class="subtitle">Select your class and enter password</p>
+
+        {% if error %}
+        <div class="error">⚠️ {{ error }}</div>
+        {% endif %}
+
+        <form method="POST">
+            <div class="form-group">
+                <label>Select Class</label>
+                <select name="class_name" required>
+                    <option value="">-- Choose Your Class --</option>
+                    <option value="IT-A">IT-A (Sathiyapriya Mam)</option>
+                    <option value="IT-B">IT-B (Gowsalya Mam)</option>
+                    <option value="IT-C">IT-C (Sangeetha Mam)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" 
+                       placeholder="Enter your password" required>
+            </div>
+            <button type="submit" class="btn-login">Login →</button>
+        </form>
+
+        <div class="forgot">
+            <a href="/forgot-password">Forgot Password?</a>
+        </div>
+
+        <div class="advisor-info">
+            <p>IT-A: Sathiyapriya Mam &nbsp;|&nbsp; 
+               IT-B: Gowsalya Mam &nbsp;|&nbsp; 
+               IT-C: Sageetha Mam</p>
+        </div>
+    </div>
+</body>
+</html>

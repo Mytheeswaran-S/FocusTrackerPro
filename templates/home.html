@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus Tracker Pro</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            text-align: center;
+            color: white;
+            padding: 40px;
+        }
+        .logo {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            color: #e94560;
+        }
+        .dept {
+            font-size: 22px;
+            color: #a8b2d8;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            font-size: 18px;
+            color: #8892b0;
+            margin-bottom: 50px;
+        }
+        .welcome-box {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 40px 60px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+        }
+        .welcome-box h2 {
+            font-size: 28px;
+            color: #64ffda;
+            margin-bottom: 15px;
+        }
+        .welcome-box p {
+            color: #a8b2d8;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+        .btn-login {
+            display: inline-block;
+            background: linear-gradient(135deg, #e94560, #c23152);
+            color: white;
+            padding: 18px 60px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(233,69,96,0.3);
+        }
+        .btn-login:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(233,69,96,0.5);
+        }
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 50px;
+        }
+        .stat-box {
+            text-align: center;
+        }
+        .stat-box .number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #64ffda;
+        }
+        .stat-box .label {
+            font-size: 14px;
+            color: #8892b0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🎓</div>
+        <h1>Focus Tracker Pro</h1>
+        <div class="dept">Department of Information Technology</div>
+        <div class="subtitle">AI-Powered Student Attention Monitoring System</div>
+        
+        <div class="welcome-box">
+            <h2>Welcome to Focus Tracker Pro</h2>
+            <p>Monitor student attention in real-time using AI-powered face detection.<br>
+            Track focus levels, detect distractions, and generate detailed reports.</p>
+        </div>
+        
+        <a href="/login" class="btn-login">Staff Login →</a>
+        
+        <div class="stats">
+            <div class="stat-box">
+                <div class="number">3</div>
+                <div class="label">Classes</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">180</div>
+                <div class="label">Students</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">3</div>
+                <div class="label">Advisors</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

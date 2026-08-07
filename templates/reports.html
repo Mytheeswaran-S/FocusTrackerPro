@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports - Focus Tracker Pro</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            min-height: 100vh;
+            color: white;
+        }
+        .navbar {
+            background: rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar h1 { font-size: 22px; color: #e94560; }
+        .navbar a {
+            color: #64ffda;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 8px 20px;
+            border: 1px solid #64ffda;
+            border-radius: 20px;
+        }
+        .container { padding: 40px; }
+        h2 { font-size: 28px; color: #64ffda; margin-bottom: 25px; }
+        .session-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 25px 30px;
+            margin-bottom: 20px;
+        }
+        .session-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .session-top h3 { color: #64ffda; font-size: 18px; }
+        .session-date { color: #8892b0; font-size: 13px; margin-top: 4px; }
+        .btn-pdf {
+            background: linear-gradient(135deg, #e94560, #c23152);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .btn-pdf:hover { transform: translateY(-2px); }
+        .alert-stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+        .stat-chip {
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+        .stat-chip.distracted {
+            background: rgba(233,69,96,0.2);
+            border: 1px solid #e94560;
+            color: #e94560;
+        }
+        .stat-chip.sleeping {
+            background: rgba(255,165,0,0.2);
+            border: 1px solid orange;
+            color: orange;
+        }
+        .stat-chip.phone {
+            background: rgba(100,255,218,0.2);
+            border: 1px solid #64ffda;
+            color: #64ffda;
+        }
+        .alerts-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .alerts-table th {
+            background: rgba(255,255,255,0.05);
+            padding: 10px 15px;
+            text-align: left;
+            color: #a8b2d8;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+        .alerts-table td {
+            padding: 10px 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: #e0e0e0;
+            font-size: 14px;
+        }
+        .badge-distracted {
+            background: rgba(233,69,96,0.2);
+            color: #e94560;
+            padding: 3px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+        }
+        .badge-sleeping {
+            background: rgba(255,165,0,0.2);
+            color: orange;
+            padding: 3px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+        }
+        .badge-phone {
+            background: rgba(100,255,218,0.2);
+            color: #64ffda;
+            padding: 3px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+        }
+        .no-sessions {
+            text-align: center;
+            padding: 60px;
+            color: #8892b0;
+        }
+        .reg-badge {
+            background: rgba(100,255,218,0.1);
+            color: #64ffda;
+            padding: 3px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1>🎓 Focus Tracker Pro</h1>
+        <a href="/dashboard">← Back to Dashboard</a>
+    </div>
+
+    <div class="container">
+        <h2>📊 Session Reports - {{ class_name }}</h2>
+
+        {% if sessions %}
+            {% for session in sessions %}
+            <div class="session-card">
+                <div class="session-top">
+                    <div>
+                        <h3>📅 Session - {{ session.date }}</h3>
+                        <p class="session-date">
+                            🕐 {{ session.start_time }} 
+                            {% if session.end_time %}
+                            → {{ session.end_time }}
+                            {% else %}
+                            → Ongoing
+                            {% endif %}
+                        </p>
+                    </div>
+                    <a href="/download-report/{{ session.id }}" class="btn-pdf">
+                        ⬇ Download PDF
+                    </a>
+                </div>
+
+                <div class="alert-stats">
+                    <span class="stat-chip distracted">
+                        ⚠️ Distracted: {{ session.distracted }}
+                    </span>
+                    <span class="stat-chip sleeping">
+                        😴 Sleeping: {{ session.sleeping }}
+                    </span>
+                    <span class="stat-chip phone">
+                        📱 Phone Use: {{ session.phone_use }}
+                    </span>
+                </div>
+
+                {% if session.alerts %}
+                <table class="alerts-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Register No</th>
+                            <th>Student Name</th>
+                            <th>Alert Type</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for alert in session.alerts %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td><span class="reg-badge">{{ alert.register_no }}</span></td>
+                            <td>{{ alert.student_name }}</td>
+                            <td>
+                                {% if alert.alert_type == 'DISTRACTED' %}
+                                <span class="badge-distracted">⚠️ Distracted</span>
+                                {% elif alert.alert_type == 'SLEEPING' %}
+                                <span class="badge-sleeping">😴 Sleeping</span>
+                                {% else %}
+                                <span class="badge-phone">📱 Phone Use</span>
+                                {% endif %}
+                            </td>
+                            <td>🕐 {{ alert.time }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p style="color:#8892b0; font-size:14px;">
+                    No alerts recorded in this session.
+                </p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        {% else %}
+        <div class="no-sessions">
+            <p style="font-size:50px;">📭</p>
+            <p style="font-size:18px; margin-top:15px;">
+                No sessions yet. Start a session to see reports!
+            </p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
